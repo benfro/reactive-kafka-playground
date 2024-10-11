@@ -1,4 +1,4 @@
-package net.benfro.lab.reactive_kafka.consumer;
+package net.benfro.lab.reactive_kafka.lec03_in_combo;
 
 import java.util.List;
 import java.util.Map;
@@ -11,7 +11,7 @@ import reactor.kafka.receiver.KafkaReceiver;
 import reactor.kafka.receiver.ReceiverOptions;
 
 @Slf4j
-public class Lec01Consumer {
+public class KafkaConsumer {
 
     public static void main(String[] args) {
 
@@ -26,11 +26,9 @@ public class Lec01Consumer {
 
         var options = ReceiverOptions.create(consumerConfig)
             .subscription(List.of("order-events"));
-        //.consumerProperty(ConsumerConfig.GROUP_ID_CONFIG, "demo-group")
 
         KafkaReceiver.create(options)
             .receive()
-//            .take(3) // Will stop after three items
             .doOnNext(r -> log.info("r.key: {}, r.value: {}", r.key(), r.value()))
             .doOnNext(r -> r.receiverOffset().acknowledge() )
             .subscribe();

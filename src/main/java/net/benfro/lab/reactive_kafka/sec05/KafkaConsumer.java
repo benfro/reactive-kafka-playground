@@ -1,4 +1,4 @@
-package net.benfro.lab.reactive_kafka.consumer;
+package net.benfro.lab.reactive_kafka.sec05;
 
 import java.util.List;
 import java.util.Map;
@@ -11,9 +11,9 @@ import reactor.kafka.receiver.KafkaReceiver;
 import reactor.kafka.receiver.ReceiverOptions;
 
 @Slf4j
-public class Lec01Consumer {
+public class KafkaConsumer {
 
-    public static void main(String[] args) {
+    public static void start(String instanceId) {
 
         var consumerConfig = Map.<String, Object>of(
             ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092",
@@ -21,16 +21,14 @@ public class Lec01Consumer {
             ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class,
             ConsumerConfig.GROUP_ID_CONFIG, "demo-group-123",
             ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest",
-            ConsumerConfig.GROUP_INSTANCE_ID_CONFIG, "4077"
+            ConsumerConfig.GROUP_INSTANCE_ID_CONFIG, instanceId
         );
 
         var options = ReceiverOptions.create(consumerConfig)
-            .subscription(List.of("order-events"));
-        //.consumerProperty(ConsumerConfig.GROUP_ID_CONFIG, "demo-group")
+            .subscription(List.of("triple-events"));
 
         KafkaReceiver.create(options)
             .receive()
-//            .take(3) // Will stop after three items
             .doOnNext(r -> log.info("r.key: {}, r.value: {}", r.key(), r.value()))
             .doOnNext(r -> r.receiverOffset().acknowledge() )
             .subscribe();

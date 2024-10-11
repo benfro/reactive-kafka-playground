@@ -1,10 +1,10 @@
-package net.benfro.lab.reactive_kafka.producer;
+package net.benfro.lab.reactive_kafka.lec04_headers;
 
-import java.time.Duration;
 import java.util.Map;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.header.internals.RecordHeaders;
 import org.apache.kafka.common.serialization.StringSerializer;
 
 import lombok.extern.slf4j.Slf4j;
@@ -13,10 +13,8 @@ import reactor.kafka.sender.KafkaSender;
 import reactor.kafka.sender.SenderOptions;
 import reactor.kafka.sender.SenderRecord;
 
-
-
 @Slf4j
-public class KafkaProducer {
+public class KafkaHeaderProducer {
 
     public static void main(String[] args) {
 
@@ -28,17 +26,21 @@ public class KafkaProducer {
 
         var options = SenderOptions.<String, String>create(config);
 
-        var flux = Flux.interval(Duration.ofMillis(100))
-            .take(100)
-            .map(i -> new ProducerRecord<>("order-events", i.toString(), "order-" + i))
-            .map(pr -> SenderRecord.create(pr, pr.key()));
+        var flux = Flux.range(1, 10).map(KafkaHeaderProducer::createSenderRecord);
 
         var sender = KafkaSender.create(options);
-//        sender.close();
         sender.send(flux)
-            .doOnNext(record -> log.info("Correlation: {}", record.correlationMetadata()))
+            .doOnNext(r -> log.info("Sender correlation: {}", r.correlationMetadata()))
             .doOnComplete(sender::close)
             .subscribe();
+    }
+
+    static SenderRecord<String, String, String> createSenderRecord(Integer i) {
+        var headers = new RecordHeaders();
+        headers.add("client-id", "some-client".getBytes());
+        headers.add("tracing-id", "tracing-client".getBytes());
+        var pr = new ProducerRecord<>("order-events", null, i.toString(), "order-" + i, headers);
+        return SenderRecord.create(pr, pr.key());
     }
 
 
