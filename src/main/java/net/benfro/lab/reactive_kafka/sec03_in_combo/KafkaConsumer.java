@@ -1,4 +1,4 @@
-package net.benfro.lab.reactive_kafka.lec03_in_combo;
+package net.benfro.lab.reactive_kafka.sec03_in_combo;
 
 import java.util.List;
 import java.util.Map;

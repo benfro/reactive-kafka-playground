@@ -1,4 +1,4 @@
-package net.benfro.lab.reactive_kafka.lec04_headers;
+package net.benfro.lab.reactive_kafka.sec04_headers;
 
 import java.util.List;
 import java.util.Map;
