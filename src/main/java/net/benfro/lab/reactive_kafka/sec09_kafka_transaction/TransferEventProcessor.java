@@ -52,10 +52,10 @@ public class TransferEventProcessor {
     private Flux<SenderRecord<String, String, String>> toSenderRecord(TransferEvent event) {
         var prodRecordTp = new ProducerRecord<>("transaction-events",
             event.key(),
-            "%s+%s".format(event.to(), event.amount()));
+            String.format("%s+%s",event.to(), event.amount()));
         var prodRecordFrom = new ProducerRecord<>("transaction-events",
             event.key(),
-            "%s-%s".format(event.from(), event.amount()));
+            String.format("%s-%s", event.from(), event.amount()));
 
         var senderRecordTo = SenderRecord.create(prodRecordTp, prodRecordTp.key());
         var senderRecordFrom = SenderRecord.create(prodRecordFrom, prodRecordFrom.key());

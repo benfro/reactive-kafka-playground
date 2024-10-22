@@ -14,8 +14,17 @@ import reactor.kafka.receiver.ReceiverOptions;
 import reactor.kafka.sender.KafkaSender;
 import reactor.kafka.sender.SenderOptions;
 
-// Didn't work: console producer wasn't parsing the key-value correctly, and key was NULL
-// 14:30:40.307 [reactive-kafka-demo-group-1] INFO  n.b.l.r.s.TransferEventConsumer - key: null, value: 1:a,b,10
+/**
+ * Lots of problem with producer not parsing key
+ *
+ * This fixed it:
+ *
+ * kafka-console-producer.sh \
+ *     --bootstrap-server localhost:9092 \
+ *     --topic transfer-requests \
+ *     --property parse.key=true \
+ *     --property key.separator=":"
+ */
 
 @Slf4j
 public class TransferDemo {
