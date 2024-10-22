@@ -37,6 +37,11 @@ public class TransferEventProcessor {
                 .last())
             .doOnError(ex -> log.error(ex.getMessage()))
             .onErrorResume(ex -> manager.abort());
+
+        /**
+         * Alternative way. The inner Flux MUST be produced in a transactional way!
+         */
+        //this.sender.sendTransactionally(Flux<Flux<SomeType>>)
     }
 
     private Mono<TransferEvent> validate(TransferEvent event) {

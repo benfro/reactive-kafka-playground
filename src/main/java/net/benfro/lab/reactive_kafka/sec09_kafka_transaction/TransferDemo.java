@@ -21,7 +21,7 @@ import reactor.kafka.sender.SenderOptions;
  *
  * kafka-console-producer.sh \
  *     --bootstrap-server localhost:9092 \
- *     --topic transfer-requests \
+ *     --topic order-events \
  *     --property parse.key=true \
  *     --property key.separator=":"
  */
