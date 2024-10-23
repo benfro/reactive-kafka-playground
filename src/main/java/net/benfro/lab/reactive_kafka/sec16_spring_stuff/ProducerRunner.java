@@ -15,7 +15,7 @@ import reactor.core.publisher.Flux;
 public class ProducerRunner implements CommandLineRunner {
 
     @Autowired
-    private ReactiveKafkaProducerTemplate<String, OrderEvent> template;
+    private ReactiveKafkaProducerTemplate<String, DummyOrder> template;
 
     @Override
     public void run(String... args) throws Exception {

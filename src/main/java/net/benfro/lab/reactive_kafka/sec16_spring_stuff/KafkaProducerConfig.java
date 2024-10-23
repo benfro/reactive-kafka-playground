@@ -17,12 +17,12 @@ import reactor.kafka.sender.SenderOptions;
 public class KafkaProducerConfig {
 
     @Bean
-    public SenderOptions<String, OrderEvent> senderOptions(KafkaProperties kafkaProperties) {
-        return SenderOptions.<String, OrderEvent>create(kafkaProperties.buildProducerProperties());
+    public SenderOptions<String, DummyOrder> senderOptions(KafkaProperties kafkaProperties) {
+        return SenderOptions.<String, DummyOrder>create(kafkaProperties.buildProducerProperties());
     }
 
     @Bean
-    public ReactiveKafkaProducerTemplate<String, OrderEvent> reactiveKafkaProducerTemplate(SenderOptions<String, OrderEvent> options) {
+    public ReactiveKafkaProducerTemplate<String, DummyOrder> reactiveKafkaProducerTemplate(SenderOptions<String, DummyOrder> options) {
         return new ReactiveKafkaProducerTemplate<>(options);
     }
 }
