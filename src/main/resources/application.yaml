@@ -11,7 +11,7 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         "group.instance.id": "1"
-        "spring.json.trusted.packages": "net.benfro.lab.reactive_kafka.sec16_spring_stuff"
+        "spring.json.trusted.packages": "net.benfro.lab.reactive_kafka.sec17_integration_tests.consumer"
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
