@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>net.benfro.lab</groupId>
-    <artifactId>reactive-kafka-playground</artifactId>
+    <artifactId>playground-course1</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>reactive-kafka-playground</name>
     <description>Learning project for Kafka</description>
